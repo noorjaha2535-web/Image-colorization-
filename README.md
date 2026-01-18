@@ -8,13 +8,11 @@ My Frist project
 # =====================================
 # IMPORTS
 # =====================================
-import tensorflow as tf
-import tensorflow_hub as hub
-import numpy as np
-import cv2
-from PIL import Image
-import matplotlib.pyplot as plt
-from google.colab import files
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torchvision.transform as transform
+
 
 # =====================================
 # LOAD NEURAL STYLE TRANSFER MODEL
