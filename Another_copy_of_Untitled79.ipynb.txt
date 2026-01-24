@@ -1,0 +1,244 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "gpuType": "T4"
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    },
+    "accelerator": "GPU"
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "kvSCv3rNotia"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 1000
+        },
+        "id": "CUfPe7aCoYaf",
+        "outputId": "4d6cc5e0-376f-481b-8bf9-605224aa229a"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: pillow in /usr/local/lib/python3.12/dist-packages (11.3.0)\n",
+            "Requirement already satisfied: gradio in /usr/local/lib/python3.12/dist-packages (5.50.0)\n",
+            "Requirement already satisfied: opencv-python in /usr/local/lib/python3.12/dist-packages (4.12.0.88)\n",
+            "Requirement already satisfied: numpy in /usr/local/lib/python3.12/dist-packages (2.0.2)\n",
+            "Requirement already satisfied: aiofiles<25.0,>=22.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (24.1.0)\n",
+            "Requirement already satisfied: anyio<5.0,>=3.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (4.12.1)\n",
+            "Requirement already satisfied: brotli>=1.1.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (1.2.0)\n",
+            "Requirement already satisfied: fastapi<1.0,>=0.115.2 in /usr/local/lib/python3.12/dist-packages (from gradio) (0.123.10)\n",
+            "Requirement already satisfied: ffmpy in /usr/local/lib/python3.12/dist-packages (from gradio) (1.0.0)\n",
+            "Requirement already satisfied: gradio-client==1.14.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (1.14.0)\n",
+            "Requirement already satisfied: groovy~=0.1 in /usr/local/lib/python3.12/dist-packages (from gradio) (0.1.2)\n",
+            "Requirement already satisfied: httpx<1.0,>=0.24.1 in /usr/local/lib/python3.12/dist-packages (from gradio) (0.28.1)\n",
+            "Requirement already satisfied: huggingface-hub<2.0,>=0.33.5 in /usr/local/lib/python3.12/dist-packages (from gradio) (0.36.0)\n",
+            "Requirement already satisfied: jinja2<4.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (3.1.6)\n",
+            "Requirement already satisfied: markupsafe<4.0,>=2.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (3.0.3)\n",
+            "Requirement already satisfied: orjson~=3.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (3.11.5)\n",
+            "Requirement already satisfied: packaging in /usr/local/lib/python3.12/dist-packages (from gradio) (25.0)\n",
+            "Requirement already satisfied: pandas<3.0,>=1.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (2.2.2)\n",
+            "Requirement already satisfied: pydantic<=2.12.3,>=2.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (2.12.3)\n",
+            "Requirement already satisfied: pydub in /usr/local/lib/python3.12/dist-packages (from gradio) (0.25.1)\n",
+            "Requirement already satisfied: python-multipart>=0.0.18 in /usr/local/lib/python3.12/dist-packages (from gradio) (0.0.21)\n",
+            "Requirement already satisfied: pyyaml<7.0,>=5.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (6.0.3)\n",
+            "Requirement already satisfied: ruff>=0.9.3 in /usr/local/lib/python3.12/dist-packages (from gradio) (0.14.13)\n",
+            "Requirement already satisfied: safehttpx<0.2.0,>=0.1.6 in /usr/local/lib/python3.12/dist-packages (from gradio) (0.1.7)\n",
+            "Requirement already satisfied: semantic-version~=2.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (2.10.0)\n",
+            "Requirement already satisfied: starlette<1.0,>=0.40.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (0.50.0)\n",
+            "Requirement already satisfied: tomlkit<0.14.0,>=0.12.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (0.13.3)\n",
+            "Requirement already satisfied: typer<1.0,>=0.12 in /usr/local/lib/python3.12/dist-packages (from gradio) (0.21.1)\n",
+            "Requirement already satisfied: typing-extensions~=4.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (4.15.0)\n",
+            "Requirement already satisfied: uvicorn>=0.14.0 in /usr/local/lib/python3.12/dist-packages (from gradio) (0.40.0)\n",
+            "Requirement already satisfied: fsspec in /usr/local/lib/python3.12/dist-packages (from gradio-client==1.14.0->gradio) (2025.3.0)\n",
+            "Requirement already satisfied: websockets<16.0,>=13.0 in /usr/local/lib/python3.12/dist-packages (from gradio-client==1.14.0->gradio) (15.0.1)\n",
+            "Requirement already satisfied: idna>=2.8 in /usr/local/lib/python3.12/dist-packages (from anyio<5.0,>=3.0->gradio) (3.11)\n",
+            "Requirement already satisfied: annotated-doc>=0.0.2 in /usr/local/lib/python3.12/dist-packages (from fastapi<1.0,>=0.115.2->gradio) (0.0.4)\n",
+            "Requirement already satisfied: certifi in /usr/local/lib/python3.12/dist-packages (from httpx<1.0,>=0.24.1->gradio) (2026.1.4)\n",
+            "Requirement already satisfied: httpcore==1.* in /usr/local/lib/python3.12/dist-packages (from httpx<1.0,>=0.24.1->gradio) (1.0.9)\n",
+            "Requirement already satisfied: h11>=0.16 in /usr/local/lib/python3.12/dist-packages (from httpcore==1.*->httpx<1.0,>=0.24.1->gradio) (0.16.0)\n",
+            "Requirement already satisfied: filelock in /usr/local/lib/python3.12/dist-packages (from huggingface-hub<2.0,>=0.33.5->gradio) (3.20.3)\n",
+            "Requirement already satisfied: requests in /usr/local/lib/python3.12/dist-packages (from huggingface-hub<2.0,>=0.33.5->gradio) (2.32.4)\n",
+            "Requirement already satisfied: tqdm>=4.42.1 in /usr/local/lib/python3.12/dist-packages (from huggingface-hub<2.0,>=0.33.5->gradio) (4.67.1)\n",
+            "Requirement already satisfied: hf-xet<2.0.0,>=1.1.3 in /usr/local/lib/python3.12/dist-packages (from huggingface-hub<2.0,>=0.33.5->gradio) (1.2.0)\n",
+            "Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.12/dist-packages (from pandas<3.0,>=1.0->gradio) (2.9.0.post0)\n",
+            "Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.12/dist-packages (from pandas<3.0,>=1.0->gradio) (2025.2)\n",
+            "Requirement already satisfied: tzdata>=2022.7 in /usr/local/lib/python3.12/dist-packages (from pandas<3.0,>=1.0->gradio) (2025.3)\n",
+            "Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.12/dist-packages (from pydantic<=2.12.3,>=2.0->gradio) (0.7.0)\n",
+            "Requirement already satisfied: pydantic-core==2.41.4 in /usr/local/lib/python3.12/dist-packages (from pydantic<=2.12.3,>=2.0->gradio) (2.41.4)\n",
+            "Requirement already satisfied: typing-inspection>=0.4.2 in /usr/local/lib/python3.12/dist-packages (from pydantic<=2.12.3,>=2.0->gradio) (0.4.2)\n",
+            "Requirement already satisfied: click>=8.0.0 in /usr/local/lib/python3.12/dist-packages (from typer<1.0,>=0.12->gradio) (8.3.1)\n",
+            "Requirement already satisfied: shellingham>=1.3.0 in /usr/local/lib/python3.12/dist-packages (from typer<1.0,>=0.12->gradio) (1.5.4)\n",
+            "Requirement already satisfied: rich>=10.11.0 in /usr/local/lib/python3.12/dist-packages (from typer<1.0,>=0.12->gradio) (13.9.4)\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.12/dist-packages (from python-dateutil>=2.8.2->pandas<3.0,>=1.0->gradio) (1.17.0)\n",
+            "Requirement already satisfied: markdown-it-py>=2.2.0 in /usr/local/lib/python3.12/dist-packages (from rich>=10.11.0->typer<1.0,>=0.12->gradio) (4.0.0)\n",
+            "Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /usr/local/lib/python3.12/dist-packages (from rich>=10.11.0->typer<1.0,>=0.12->gradio) (2.19.2)\n",
+            "Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.12/dist-packages (from requests->huggingface-hub<2.0,>=0.33.5->gradio) (3.4.4)\n",
+            "Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.12/dist-packages (from requests->huggingface-hub<2.0,>=0.33.5->gradio) (2.5.0)\n",
+            "Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.12/dist-packages (from markdown-it-py>=2.2.0->rich>=10.11.0->typer<1.0,>=0.12->gradio) (0.1.2)\n",
+            "It looks like you are running Gradio on a hosted Jupyter notebook, which requires `share=True`. Automatically setting `share=True` (you can turn this off by setting `share=False` in `launch()` explicitly).\n",
+            "\n",
+            "Colab notebook detected. To show errors in colab notebook, set debug=True in launch()\n",
+            "* Running on public URL: https://5c0a9647552864e27b.gradio.live\n",
+            "\n",
+            "This share link expires in 1 week. For free permanent hosting and GPU upgrades, run `gradio deploy` from the terminal in the working directory to deploy to Hugging Face Spaces (https://huggingface.co/spaces)\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.HTML object>"
+            ],
+            "text/html": [
+              "<div><iframe src=\"https://5c0a9647552864e27b.gradio.live\" width=\"100%\" height=\"500\" allow=\"autoplay; camera; microphone; clipboard-read; clipboard-write;\" frameborder=\"0\" allowfullscreen></iframe></div>"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": []
+          },
+          "metadata": {},
+          "execution_count": 1
+        }
+      ],
+      "source": [
+        "# =================  PROJECT =================\n",
+        "# Project: Image Colorization with Artistic Style Transfer\n",
+        "# Student: Mehkaan Anjum\n",
+        "\n",
+        "# Internship Project (Executable)\n",
+        "# =================  INTERNSHIP PROJECT =================\n",
+        "# Project Title: Image Colorization with Artistic Style Transfer\n",
+        "# Student Name: Mehkaan Anjum\n",
+        "# Course: BCA\n",
+        "# Task: Artistic Style Transfer in Colorization\n",
+        "# Description:\n",
+        "# This project converts grayscale images into color and applies simple artistic styles\n",
+        "# using Python, OpenCV, and Gradio with a graphical interface.\n",
+        "!pip install pillow gradio opencv-python numpy\n",
+        "\n",
+        "import cv2\n",
+        "import numpy as np\n",
+        "from PIL import Image\n",
+        "import gradio as gr\n",
+        "# Steps to Run:\n",
+        "# 1. Run all cells\n",
+        "# 2. Upload an image in the GUI\n",
+        "# 3. Select an artistic style\n",
+        "# 4. View grayscale, colorized, and final styled output\n",
+        "\n",
+        "# -------- SIMPLE REALISTIC COLORIZATION FUNCTION --------\n",
+        "def simple_colorize(gray_img):\n",
+        "    gray = gray_img.convert(\"L\")\n",
+        "    gray_np = np.array(gray)\n",
+        "\n",
+        "    # Create soft natural colors\n",
+        "    r = gray_np\n",
+        "    g = cv2.GaussianBlur(gray_np, (15,15), 0)\n",
+        "    b = 255 - gray_np\n",
+        "\n",
+        "    color = np.stack([r, g, b], axis=2)\n",
+        "    return Image.fromarray(color.astype(\"uint8\"))\n",
+        "\n",
+        "# -------- STYLE FILTER FUNCTION --------\n",
+        "def apply_style(img, style):\n",
+        "    img_np = np.array(img)\n",
+        "\n",
+        "    if style == \"Warm Style\":\n",
+        "        styled = cv2.applyColorMap(img_np, cv2.COLORMAP_PINK)\n",
+        "\n",
+        "    elif style == \"Cool Style\":\n",
+        "        styled = cv2.applyColorMap(img_np, cv2.COLORMAP_WINTER)\n",
+        "\n",
+        "    elif style == \"Sketch\":\n",
+        "        gray = cv2.cvtColor(img_np, cv2.COLOR_RGB2GRAY)\n",
+        "        inv = 255 - gray\n",
+        "        blur = cv2.GaussianBlur(inv, (21,21), 0)\n",
+        "        sketch = cv2.divide(gray, 255-blur, scale=256)\n",
+        "        styled = cv2.cvtColor(sketch, cv2.COLOR_GRAY2RGB)\n",
+        "\n",
+        "    else:\n",
+        "        styled = img_np\n",
+        "\n",
+        "    return Image.fromarray(styled)\n",
+        "\n",
+        "# -------- MAIN PIPELINE --------\n",
+        "def process_image(input_image, style):\n",
+        "    # Step 1: Convert to grayscale\n",
+        "    gray = input_image.convert(\"L\")\n",
+        "\n",
+        "    # Step 2: Colorize\n",
+        "    colorized = simple_colorize(gray)\n",
+        "\n",
+        "    # Step 3: Apply artistic style\n",
+        "    final = apply_style(colorized, style)\n",
+        "\n",
+        "    # Save final output (for GitHub upload)\n",
+        "    final.save(\"final_output.jpg\")\n",
+        "\n",
+        "    return gray, colorized, final\n",
+        "\n",
+        "# -------- GUI --------\n",
+        "interface = gr.Interface(\n",
+        "    fn=process_image,\n",
+        "    inputs=[\n",
+        "        gr.Image(type=\"pil\", label=\"Upload Image\"),\n",
+        "        gr.Dropdown([\"Warm Style\", \"Cool Style\", \"Sketch\"], label=\"Choose Artistic Style\")\n",
+        "    ],\n",
+        "    outputs=[\n",
+        "        gr.Image(label=\"Grayscale Image\"),\n",
+        "        gr.Image(label=\"Colorized Image\"),\n",
+        "        gr.Image(label=\"Final Styled Output\")\n",
+        "    ],\n",
+        "    title=\"Image Colorization with Artistic Style Transfer\",\n",
+        "    description=\"This project converts grayscale images into color and applies simple artistic styles using Python and OpenCV.\"\n",
+        ")\n",
+        "\n",
+        "interface.launch()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "kZ9h-iiiq8dG"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "nKwzCE2KqfjV"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
