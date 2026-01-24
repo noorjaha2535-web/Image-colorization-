@@ -1,105 +1,95 @@
-# Image-colorization-
-My Frist project 
-# =====================================
-# INSTALL REQUIRED LIBRARIES (COLAB)
-# =====================================
-!pip install -q tensorflow tensorflow-hub pillow opencv-python matplotlib
+# Internship Project Report
 
-# =====================================
-# IMPORTS
-# =====================================
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torchvision.transform as transform
+## Project Title:
+**Image Colorization with Artistic Style Transfer**
 
+**Student Name:** Mehkaan Anjum  
+**Course:** BCA  
 
-# =====================================
-# LOAD NEURAL STYLE TRANSFER MODEL
-# =====================================
-print("Loading Neural Style Transfer model...")
-nst_model = hub.load(
-    "https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2"
-)
-print("Model loaded successfully")
+---
 
-# =====================================
-# IMAGE LOADING FUNCTION (SAFE FOR COLAB)
-# =====================================
-def load_image_pil(image_path, size=(256, 256)):
-    img = Image.open(image_path).convert("RGB")
-    img = img.resize(size)
-    img = np.array(img).astype(np.float32) / 255.0
-    img = img[np.newaxis, :]
-    return img
+## 1. Project Overview
+This project demonstrates a simple approach to **image colorization** combined with **artistic style transfer**.  
+It allows users to upload a **grayscale image**, generate a **colorized version**, and apply **artistic styles** (Warm, Cool, Sketch) using Python libraries.  
 
-# =====================================
-# COLORIZATION FUNCTION (BASIC)
-# =====================================
-def colorize_image(image_path):
-    """
-    NOTE:
-    This is pseudo-colorization.
-    Real projects use GAN-based models (future scope).
-    """
-    img = Image.open(image_path).convert("L")   # grayscale
-    img = np.array(img)
-    img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-    colorized = cv2.applyColorMap(img, cv2.COLORMAP_TURBO)
-    return colorized
+The project is designed for internship submission and provides a **user-friendly GUI** for demonstration purposes.
 
-# =====================================
-# UPLOAD IMAGES
-# =====================================
-print("Upload CONTENT image (grayscale preferred)")
-content_upload = files.upload()
-content_path = list(content_upload.keys())[0]
+---
 
-print("Upload STYLE image (painting/art)")
-style_upload = files.upload()
-style_path = list(style_upload.keys())[0]
+## 2. Objectives
+- Convert grayscale images into colorized images.  
+- Apply artistic styles (Warm, Cool, Sketch) to enhance the visual appearance.  
+- Provide a graphical interface for easy user interaction.  
+- Save the final styled image for demonstration and submission.
 
-# =====================================
-# COLORIZE CONTENT IMAGE
-# =====================================
-colorized_img = colorize_image(content_path)
+---
 
-# Save temporary colorized image
-cv2.imwrite("colorized_temp.jpg", colorized_img)
+## 3. Tools and Libraries
+- **Python 3.x**  
+- **Pillow (PIL):** for image manipulation  
+- **OpenCV:** for image processing and artistic filters  
+- **NumPy:** for array operations  
+- **Gradio:** for creating an interactive GUI  
 
-# =====================================
-# PREPARE IMAGES FOR NST
-# =====================================
-content_img = load_image_pil("colorized_temp.jpg")
-style_img = load_image_pil(style_path)
+---
 
-# =====================================
-# APPLY NEURAL STYLE TRANSFER
-# =====================================
-print("Applying Artistic Style Transfer...")
-stylized_img = nst_model(
-    tf.constant(content_img),
-    tf.constant(style_img)
-)[0]
+## 4. Methodology
+The project follows these steps:
 
-# =====================================
-# DISPLAY RESULTS
-# =====================================
-plt.figure(figsize=(18,6))
+1. **Image Upload:**  
+   Users upload a grayscale image through the Gradio GUI.
 
-plt.subplot(1,3,1)
-plt.title("Original Content Image")
-plt.imshow(Image.open(content_path))
-plt.axis("off")
+2. **Grayscale Conversion:**  
+   The uploaded image is converted to grayscale using Pillow (`.convert("L")`) to ensure proper input for colorization.
 
-plt.subplot(1,3,2)
-plt.title("Colorized Image")
-plt.imshow(cv2.cvtColor(colorized_img, cv2.COLOR_BGR2RGB))
-plt.axis("off")
+3. **Colorization:**  
+   A simple colorization function generates simulated RGB colors:
+   - **Red channel:** grayscale intensity  
+   - **Green channel:** inverse of grayscale  
+   - **Blue channel:** Gaussian blurred grayscale  
 
-plt.subplot(1,3,3)
-plt.title("Artistic Style Transfer Output")
-plt.imshow(stylized_img.numpy()[0])
-plt.axis("off")
+4. **Artistic Style Transfer:**  
+   The colorized image is processed to apply the selected style:
+   - **Warm Style:** Pinkish tone using OpenCV colormap (`COLORMAP_PINK`)  
+   - **Cool Style:** Bluish tone using OpenCV colormap (`COLORMAP_WINTER`)  
+   - **Sketch:** Converts the image to a sketch-like outline using grayscale inversion and Gaussian blur  
 
-plt.show()
+5. **Output Generation:**  
+   The final styled image is displayed in the GUI and saved locally as `final_output.jpg`.
+
+---
+
+## 5. GUI Interface
+The project uses **Gradio** to provide an interactive interface with:
+- **Image upload input** (supports PIL images)  
+- **Dropdown menu** to select artistic style  
+- **Outputs:** Grayscale image, colorized image, final styled image  
+
+The GUI makes it easy for users to see the transformation in real-time.
+
+---
+
+## 6. Observations and Limitations
+- **Colorization is simulated**; it is not AI-based and produces basic color effects.  
+- Artistic styles are created using **OpenCV colormaps and simple filters**, so results are not fully photo-realistic.  
+- Works best with **clear and simple images** such as faces, objects, or landscapes.  
+- Fully executable in **Google Colab or a local Python environment**.
+
+---
+
+## 7. Future Enhancements
+- Integrate **AI-based colorization models** for realistic color outputs.  
+- Add additional **artistic styles** using neural style transfer.  
+- Enhance GUI with **download options** and **error handling** for unsupported files.
+
+---
+
+## 8. Conclusion
+This project successfully demonstrates a **basic image colorization pipeline** with **artistic style effects**.  
+It is **safe, executable, and suitable for internship submission**, and provides a visually engaging way to present grayscale-to-color image transformation.
+
+---
+
+## 9. Author
+**Mehkaan Anjum**  
+BCA Student
